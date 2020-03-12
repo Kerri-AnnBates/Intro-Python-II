@@ -7,6 +7,16 @@ class Player:
         self.name = name
         self.current_room = current_room
 
+    def move(self, direction):
+        room = getattr(self.current_room, f"{direction}_to")
+
+        if room != None:
+            self.current_room = room
+        else:
+            print(
+                "Cannot go that way! Pick another direction. [e] to go east, [w] to go west, [n] to go north, [s] to go south"
+            )
+
     def __str__(self):
         return f"Player: {self.name}, {self.current_room}"
 

@@ -52,33 +52,9 @@ c_room = room["outside"]
 
 new_player = Player(p_name, c_room)
 print(f"Hello {new_player.name}!")
-
-
-def checkDirection(direction, currRoom):
-    if direction == "n":
-        if currRoom.n_to != None:
-            print("Moving north...")
-            new_player.current_room = currRoom.n_to
-        else:
-            print("NO ROOM HERE. TRY AGAIN!")
-    elif direction == "s":
-        if currRoom.s_to != None:
-            print("Moving south...")
-            new_player.current_room = currRoom.s_to
-        else:
-            print("NO ROOM HERE. TRY AGAIN!")
-    elif direction == "e":
-        if currRoom.e_to != None:
-            print("Moving east...")
-            new_player.current_room = currRoom.e_to
-        else:
-            print("NO ROOM HERE. TRY AGAIN!")
-    elif direction == "w":
-        if currRoom.w_to != None:
-            print("Moving west...")
-            new_player.current_room = currRoom.w_to
-        else:
-            print("NO ROOM HERE. TRY AGAIN!")
+print(
+    "Pick your next destination. Please enter either of the following: [n] to go north, [s] to go south, [e] to go east, [w] to go west, or [q] to quit."
+)
 
 
 def playGame():
@@ -102,13 +78,13 @@ def playGame():
     if user_input == "q":
         playing = False
     elif user_input == "n":
-        checkDirection(user_input, new_player.current_room)
+        new_player.move(user_input)
     elif user_input == "s":
-        checkDirection(user_input, new_player.current_room)
+        new_player.move(user_input)
     elif user_input == "e":
-        checkDirection(user_input, new_player.current_room)
+        new_player.move(user_input)
     elif user_input == "w":
-        checkDirection(user_input, new_player.current_room)
+        new_player.move(user_input)
     else:
         print(
             "Invalid input! Please enter either of the following: [n] to go north, [s] to go south, [e] to go east, [w] to go west, or [q] to quit."
