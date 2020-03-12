@@ -59,28 +59,28 @@ def checkDirection(direction, currRoom):
 
     if direction == "n":
         if currRoom.n_to != None:
-            print("Moving north")
+            print("Moving north...")
             new_player.current_room = currRoom.n_to
         else:
-            print("NO ROOM HERE")
+            print("NO ROOM HERE. TRY AGAIN!")
     elif direction == "s":
         if currRoom.s_to != None:
             print("Moving south...")
             new_player.current_room = currRoom.s_to
         else:
-            print("NO ROOM HERE")
+            print("NO ROOM HERE. TRY AGAIN!")
     elif direction == "e":
         if currRoom.e_to != None:
             print("Moving east...")
             new_player.current_room = currRoom.e_to
         else:
-            print("NO ROOM HERE")
+            print("NO ROOM HERE. TRY AGAIN!")
     elif direction == "w":
         if currRoom.w_to != None:
             print("Moving west...")
             new_player.current_room = currRoom.w_to
         else:
-            print("NO ROOM HERE")
+            print("NO ROOM HERE. TRY AGAIN!")
 
 
 def playGame():
