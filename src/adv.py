@@ -1,6 +1,7 @@
 from cmd import Cmd
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
@@ -42,15 +43,15 @@ room["narrow"].w_to = room["foyer"]
 room["narrow"].n_to = room["treasure"]
 room["treasure"].s_to = room["narrow"]
 
-
+rock = Item("rock", "This is a rock")
 # Main
 playing = True
 
 # Make a new player object that is currently in the 'outside' room.
-p_name = "Yoshi"
 c_room = room["outside"]
 
-new_player = Player(p_name, c_room)
+new_player = Player(input("Enter your name: "), c_room)
+
 print(f"Hello {new_player.name}!")
 print(
     "Pick your next destination. Please enter either of the following: [n] to go north, [s] to go south, [e] to go east, [w] to go west, or [q] to quit."
@@ -62,14 +63,17 @@ def playGame():
     global new_player
 
     # * Prints the current room name
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     print(f"Current room: {new_player.current_room.name}")
-
     # * Prints the current description (the textwrap module might be useful here).
     print(f"Room Description: {new_player.current_room.description}")
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    new_player.current_room.print_items()
 
     # * Waits for user input and decides what to do.
-    #
     user_input = input("Where do you want to go next: ")
+
+    actions = ("n", "s", "w", "e")
 
     # If the user enters a cardinal direction, attempt to move to the room there.
     # Print an error message if the movement isn't allowed.
@@ -77,13 +81,7 @@ def playGame():
     # If the user enters "q", quit the game.
     if user_input == "q":
         playing = False
-    elif user_input == "n":
-        new_player.move(user_input)
-    elif user_input == "s":
-        new_player.move(user_input)
-    elif user_input == "e":
-        new_player.move(user_input)
-    elif user_input == "w":
+    elif user_input in actions:
         new_player.move(user_input)
     else:
         print(
