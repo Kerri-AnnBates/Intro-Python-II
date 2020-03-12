@@ -55,8 +55,6 @@ print(f"Hello {new_player.name}!")
 
 
 def checkDirection(direction, currRoom):
-    global c_room
-
     if direction == "n":
         if currRoom.n_to != None:
             print("Moving north...")
@@ -113,7 +111,7 @@ def playGame():
         checkDirection(user_input, new_player.current_room)
     else:
         print(
-            "Invalid input! Please enter either of the following: 'n' to go north, 's' to go south, 'e' to go east, 'w' to go west, or 'q' to quit."
+            "Invalid input! Please enter either of the following: [n] to go north, [s] to go south, [e] to go east, [w] to go west, or [q] to quit."
         )
 
 
