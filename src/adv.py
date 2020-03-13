@@ -43,16 +43,30 @@ room["narrow"].w_to = room["foyer"]
 room["narrow"].n_to = room["treasure"]
 room["treasure"].s_to = room["narrow"]
 
+# Create items
 rock = Item("rock", "This is a rock")
+sword = Item("sword", "This is a sword")
+food = Item("food", "Some food")
+coin = Item("coin", "A coin")
+medkit = Item("medkit", "50 points health")
+gun = Item("gun", "KN Rifle")
+
+# Add items to rooms
+room["foyer"].add_item(rock)
+room["foyer"].add_item(food)
+room["foyer"].add_item(gun)
+room["overlook"].add_item(sword)
+room["overlook"].add_item(medkit)
+room["narrow"].add_item(coin)
+room["narrow"].add_item(food)
+
 # Main
 playing = True
 
 # Make a new player object that is currently in the 'outside' room.
-c_room = room["outside"]
+player = Player(input(">>>> Enter your name: "), room["outside"])
 
-new_player = Player(input("Enter your name: "), c_room)
-
-print(f"Hello {new_player.name}!")
+print(f"Hello {player.name}!")
 print(
     "Pick your next destination. Please enter either of the following: [n] to go north, [s] to go south, [e] to go east, [w] to go west, or [q] to quit."
 )
@@ -60,33 +74,53 @@ print(
 
 def playGame():
     global playing
-    global new_player
 
     # * Prints the current room name
-    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-    print(f"Current room: {new_player.current_room.name}")
     # * Prints the current description (the textwrap module might be useful here).
-    print(f"Room Description: {new_player.current_room.description}")
+    print(" ")
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-    new_player.current_room.print_items()
+    print(f"Current room: {player.current_room.name}")
+    print(f"Room Description: {player.current_room.description}")
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    player.current_room.print_items()
+    print(" ")
 
     # * Waits for user input and decides what to do.
-    user_input = input("Where do you want to go next: ")
+    user_input = input(">>>> Where do you want to go next: ")
 
-    actions = ("n", "s", "w", "e")
+    nouns = ("n", "s", "w", "e", "q", "i", "inventory")
+    verbs = ("go", "take", "drop")
 
-    # If the user enters a cardinal direction, attempt to move to the room there.
-    # Print an error message if the movement isn't allowed.
-    #
-    # If the user enters "q", quit the game.
-    if user_input == "q":
-        playing = False
-    elif user_input in actions:
-        new_player.move(user_input)
+    if len(user_input.split()) == 1:
+        if user_input == "q":
+            playing = False
+        elif user_input == "i" or user_input == "inventory":
+            player.show_inventory()
+        else:
+            print("Invalid input!")
+    elif len(user_input.split()) == 2:
+        user_verb = user_input.split()[0]
+        user_noun = user_input.split()[1]
+
+        # If the user enters a cardinal direction, attempt to move to the room there.
+        # Print an error message if the movement isn't allowed.
+        # If the user enters "q", quit the game.
+
+        if user_verb in verbs:
+            if user_verb == "go" and user_noun in nouns:
+                player.move(user_noun)
+            elif user_verb == "take":
+                player.take_item(user_noun)
+            elif user_verb == "drop":
+                player.drop_item(user_noun)
+            else:
+                print("Invalid input")
+        else:
+            print(
+                "Invalid input! Please enter either of the following: [n] to go north, [s] to go south, [e] to go east, [w] to go west, or [q] to quit."
+            )
     else:
-        print(
-            "Invalid input! Please enter either of the following: [n] to go north, [s] to go south, [e] to go east, [w] to go west, or [q] to quit."
-        )
+        print("Invalid Input!")
 
 
 # Write a loop that:
